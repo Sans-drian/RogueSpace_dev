@@ -35,11 +35,14 @@ public class Movement : MonoBehaviour
        movement.x = Input.GetAxisRaw("Horizontal");
        movement.y = Input.GetAxisRaw("Vertical"); 
 
+        // ------------- was testing flip function with key press
        //if(Input.GetKeyDown(KeyCode.F))
         //Flip();
 
+        // get mouse position
        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        // flips the character based on mouse position
        if (mousePos.x > transform.position.x && !facingRight)
        {
         Flip();
@@ -52,12 +55,12 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        //code that handles movement
+        //code that handles movement of character
         movement.Normalize();
         rb.velocity = new Vector2(movement.x * speed * Time.fixedDeltaTime, movement.y * speed * Time.fixedDeltaTime);
     }
 
-    private void Flip()
+    private void Flip() //flip character function
     {
         facingRight = !facingRight; //works as a switcher
         transform.Rotate(0, 180, 0);
