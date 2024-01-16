@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Awake()
+    private void Awake() //game loading
     {
-        enemies = GameObject.FindObjectsOfType<Enemy>().ToList();
-        UpdateEnemiesLeftText();
+        enemies = GameObject.FindObjectsOfType<Enemy>().ToList(); //finding out how many enemy objects exist, and puts them in a list
+        UpdateEnemiesLeftText(); //call update text function
     }
     // Update is called once per frame
     void Update()
@@ -31,16 +31,16 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void HandleEnemyDefeated(Enemy enemy)
+    void HandleEnemyDefeated(Enemy enemy) //subscribe to enemy event
     {
-        if (enemies.Remove(enemy))
+        if (enemies.Remove(enemy)) //check if the enemy is removed (?)
         {
             UpdateEnemiesLeftText();
         }
     }
 
-    void UpdateEnemiesLeftText()
+    void UpdateEnemiesLeftText() //update enemy count
     {
-        enemiesLeftText.text = $"Enemies Left: {enemies.Count}";
+        enemiesLeftText.text = $"Enemies Left: {enemies.Count}"; //update the enemiesleft text
     }
 }

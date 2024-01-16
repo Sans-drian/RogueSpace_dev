@@ -13,13 +13,17 @@ public class Bullet : MonoBehaviour
 
     // Update is called once per frame
 
+    //check collision
     private void OnCollisionEnter2D(Collision2D collision) 
     {
+        //checking if the collision is of the enemy component
         if(collision.gameObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
-        {
+        {   
+            //add damage to the enemy
             enemyComponent.TakeDamage(1);
         }
 
+        //if the bullet hits anything, destroy it
         Destroy(gameObject);
     }
     void Update()

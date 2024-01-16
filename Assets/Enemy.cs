@@ -13,12 +13,17 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private UnityEngine.Vector2 movement;
+
+    [SerializeField] FloatingHealthBar healthBar;
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
 
         health = maxHealth;
+        
+        healthBar = GetComponentInChildren<FloatingHealthBar>();
+        healthBar.UpdateHealthBar(health, maxHealth);
     }
 
     // Update is called once per frame
@@ -39,14 +44,17 @@ public class Enemy : MonoBehaviour
         moveCharacter(movement);
     }
 
+    //take damage function
     public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
+        healthBar.UpdateHealthBar(health, maxHealth);
 
+        //checking if health is 0
         if (health <= 0)
         {
             Destroy(gameObject);
-            OnEnemyKilled?.Invoke(this);
+            OnEnemyKilled?.Invoke(this); //checking if enemy is killed, if yes, broadcast message (at public static event)
         }
     }
 
