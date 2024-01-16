@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,10 +10,18 @@ public class Enemy : MonoBehaviour
 
     public static event Action<Enemy> OnEnemyKilled;
     [SerializeField] float health, maxHealth = 3f;
+    //public Health playerHealth;
     public Transform player;
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private UnityEngine.Vector2 movement;
+
+    public Health playerHealth;
+    public int damage = 1;
+
+    public float knockbackPower = 100;
+    public float knockbackDuration = 1;
+
 
     [SerializeField] FloatingHealthBar healthBar;
     // Start is called before the first frame update
@@ -42,6 +51,16 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         moveCharacter(movement);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            playerHealth.TakeDamage(damage);
+
+            StartCoroutine(Movement.instance.Knockback(knockbackDuration, knockbackPower, this.transform));
+            CameraShake.Instance.ShakeCamera(10f, .2f);
+        }
     }
 
     //take damage function

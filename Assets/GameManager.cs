@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +37,12 @@ public class GameManager : MonoBehaviour
         if (enemies.Remove(enemy)) //check if the enemy is removed (?)
         {
             UpdateEnemiesLeftText();
+        }
+
+        // win screen changer
+        if (enemies.Count == 0) //if there are no more enemies
+        {
+            SceneManager.LoadScene(4); //change scene
         }
     }
 

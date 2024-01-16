@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public static Movement instance;
     public float speed;
     private Rigidbody2D rb;
     private Animator anim;
@@ -17,6 +18,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        instance = this;
     }
     // Start is called before the first frame update
     //void Start()
@@ -58,6 +60,21 @@ public class Movement : MonoBehaviour
         //code that handles movement of character
         movement.Normalize();
         rb.velocity = new Vector2(movement.x * speed * Time.fixedDeltaTime, movement.y * speed * Time.fixedDeltaTime);
+    }
+
+    //call knockback function
+    public IEnumerator Knockback(float knockbackDuration, float knockbackPower, Transform obj)
+    {
+        float timer = 0;
+
+        while (knockbackDuration > timer)
+        {
+            timer += Time.deltaTime;
+            Vector2 direction = (obj.transform.position - this.transform.position).normalized;
+            rb.AddForce(-direction * knockbackPower);
+        }
+
+        yield return 0;
     }
 
     private void Flip() //flip character function
