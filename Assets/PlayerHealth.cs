@@ -20,6 +20,11 @@ public class PlayerHealth : MonoBehaviour
     {
         // update the main player health slider
         float fillValue = playerHealth.currentHealth / playerHealth.maxHealth;
+
+        if(fillValue <= slider.maxValue / 2)
+        {
+            fillImage.color = Color.red; //change color of healthbar after 2 hits
+        }
         //Debug.Log(fillValue);
         slider.value = fillValue; 
     }
