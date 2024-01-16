@@ -16,8 +16,8 @@ public class MainMenu : MonoBehaviour
     // public void multiplayer
     public void MultiPlayer()
     {
-        // Load scene 1
-        SceneManager.LoadScene(1);
+        // Load scene 5
+        SceneManager.LoadScene(5);
     }
 
     // public void quit

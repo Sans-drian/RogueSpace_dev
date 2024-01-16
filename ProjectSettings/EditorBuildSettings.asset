@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinScreen.unity
     guid: 2eb96c3b7a2bcfe4a9acc56b6c43ae07
+  - enabled: 1
+    path: Assets/Scenes/LoadingScreen.unity
+    guid: a366fb105e1b9a64988acebc31db64fb
   m_configObjects: {}
