@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -81,5 +82,10 @@ public class Movement : MonoBehaviour
     {
         facingRight = !facingRight; //works as a switcher
         transform.Rotate(0, 180, 0);
+    }
+
+    public static implicit operator Movement(MovementMultiplayer v)
+    {
+        throw new NotImplementedException();
     }
 }

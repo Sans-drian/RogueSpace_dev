@@ -27,6 +27,13 @@ public class Bullet : MonoBehaviour
             enemyComponent.TakeDamage(1);
         }
 
+                //checking if the collision is of the enemy component
+        if(collision.gameObject.TryGetComponent<EnemyMultiplayer>(out EnemyMultiplayer enemyComponents))
+        {   
+            //add damage to the enemy
+            enemyComponents.TakeDamage(1);
+        }
+
         //if the bullet hits anything, destroy it
         Destroy(gameObject);
     }
