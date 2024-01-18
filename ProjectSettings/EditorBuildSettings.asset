@@ -12,15 +12,24 @@ EditorBuildSettings:
     path: Assets/Scenes/MultiplayerMenu.unity
     guid: 6a008c212b1993848ab503b2d435bea1
   - enabled: 1
-    path: Assets/Scenes/MainGameScene.unity
+    path: Assets/Scenes/Singleplayer/MainGameScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/LoseScreen.unity
-    guid: 97d03432ce600774f8fa4eae14e7d9b0
+    path: Assets/Scenes/Singleplayer/LoseScreen.unity
+    guid: b0035c9cf0519864c80a9f7b6daceab2
   - enabled: 1
-    path: Assets/Scenes/WinScreen.unity
+    path: Assets/Scenes/Singleplayer/WinScreen.unity
     guid: 2eb96c3b7a2bcfe4a9acc56b6c43ae07
   - enabled: 1
     path: Assets/Scenes/LoadingScreen.unity
     guid: a366fb105e1b9a64988acebc31db64fb
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/MultiplayerMainGameScene.unity
+    guid: d03ca0cd14176d94d978731db9c6221a
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/MultiplayerLoseScreen.unity
+    guid: 97d03432ce600774f8fa4eae14e7d9b0
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/MultiplayerWinScreen.unity
+    guid: bf3e679c4b112fc4aabecf3afcc1ecf2
   m_configObjects: {}

@@ -2,39 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
 public class Bullet : MonoBehaviour
 {
+    public Photon.Realtime.Player Owner { get; set; } 
+    public int Damage { get; set; } = 1;
+    
     private Rigidbody2D rb => GetComponent<Rigidbody2D>();
-    // Start is called before the first frame update
+
     void Start()
     {
         Physics2D.IgnoreLayerCollision(6, 7); //ignore the collision for bullet and player
         Physics2D.IgnoreLayerCollision(7, 7); //ignore the collision for bullet and player
     }
 
-    // Update is called once per frame
-
-    //check collision
     private void OnCollisionEnter2D(Collision2D collision) 
     {
-
-        
-        //checking if the collision is of the enemy component
         if(collision.gameObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
         {   
-            //add damage to the enemy
-            enemyComponent.TakeDamage(1);
+            enemyComponent.TakeDamage(Damage); // Change this line
         }
 
-        //if the bullet hits anything, destroy it
+        if (collision.gameObject.TryGetComponent<EnemyMultiplayer>(out EnemyMultiplayer enemyComponents))
+        {   
+            enemyComponents.TakeDamage(Damage, Owner); // Change this line
+        }
+
         Destroy(gameObject);
     }
+
     void Update()
     {
-        //changes rotation of the bullet depending on the direction of the gun
         transform.right = rb.velocity;
     }
-
-
 }

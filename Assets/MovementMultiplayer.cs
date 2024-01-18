@@ -1,15 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Movement : MonoBehaviour
+public class MovementMultiplayer : MonoBehaviour
 {
-    public static Movement instance;
+    public static MovementMultiplayer instance;
     public float speed;
     private Rigidbody2D rb;
     private Animator anim;
     Vector2 movement;
+    PhotonView view;
 
     // variables that handle animation
     public bool isMoving;
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         instance = this;
+        view = GetComponent<PhotonView>();
     }
     // Start is called before the first frame update
     //void Start()
@@ -30,7 +32,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       //animation control while moving
+        if (view.IsMine) 
+        {
+                   //animation control while moving
        isMoving = rb.velocity.x != 0 || rb.velocity.y != 0 ;
        anim.SetBool("IsMoving", isMoving);
 
@@ -54,6 +58,8 @@ public class Movement : MonoBehaviour
        {
         Flip();
        }
+        }
+
     }
 
     private void FixedUpdate() 
@@ -82,10 +88,5 @@ public class Movement : MonoBehaviour
     {
         facingRight = !facingRight; //works as a switcher
         transform.Rotate(0, 180, 0);
-    }
-
-    public static implicit operator Movement(MovementMultiplayer v)
-    {
-        throw new NotImplementedException();
     }
 }
