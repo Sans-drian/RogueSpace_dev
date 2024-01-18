@@ -43,6 +43,12 @@ MonoBehaviour:
   - UpdateEnemiesLeftTextRPC
   - AddEnemyRPC
   - DestroyEnemyOnMasterClient
+  - RemoveEnemyFromList
+  - AddEnemyToList
+  - RemoveFromEnemiesList
+  - SyncEnemiesList
+  - MasterHandleEnemyDefeated
+  - SyncTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
