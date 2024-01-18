@@ -6,12 +6,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class GameManagerMultiplayer : MonoBehaviour
+public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
 {
     public static GameManagerMultiplayer instance;
 
     [SerializeField] TextMeshProUGUI enemiesLeftText;
     List<EnemyMultiplayer> enemies = new List<EnemyMultiplayer>();
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        // Call the RPC to update the enemies left text on all clients
+        photonView.RPC("UpdateEnemiesLeftText", RpcTarget.All, enemies.Count);
+    }
 
     private void Awake()
     {
@@ -38,20 +44,27 @@ public class GameManagerMultiplayer : MonoBehaviour
     void Start() //game loading
     {
         enemies = GameObject.FindObjectsOfType<EnemyMultiplayer>().ToList(); //finding out how many enemy objects exist, and puts them in a list
-        UpdateEnemiesLeftText(); //call update text function
+        photonView.RPC("UpdateEnemiesLeftText", RpcTarget.All, enemies.Count); //call update text function
+    }
+
+    [PunRPC]
+    void UpdateEnemiesLeftText(int enemiesCount) //update enemy count
+    {
+        enemiesLeftText.text = $"Enemies Left: {enemiesCount}"; //update the enemiesleft text
     }
 
     public void AddEnemy(EnemyMultiplayer enemy)
     {
         enemies.Add(enemy);
-        UpdateEnemiesLeftText();
+        photonView.RPC("UpdateEnemiesLeftText", RpcTarget.All, enemies.Count);
     }
 
     void HandleEnemyDefeated(EnemyMultiplayer enemy) //subscribe to enemy event
     {
         if (enemies.Remove(enemy)) //check if the enemy is removed (?)
         {
-            UpdateEnemiesLeftText();
+            // Use RPC to call UpdateEnemiesLeftText on all clients
+            photonView.RPC("UpdateEnemiesLeftText", RpcTarget.All, enemies.Count);
         }
 
         // win screen changer
@@ -59,10 +72,5 @@ public class GameManagerMultiplayer : MonoBehaviour
         {
             SceneManager.LoadScene(8); //change scene
         }
-    }
-
-    void UpdateEnemiesLeftText() //update enemy count
-    {
-        enemiesLeftText.text = $"Enemies Left: {enemies.Count}"; //update the enemiesleft text
     }
 }

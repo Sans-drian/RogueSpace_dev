@@ -81,6 +81,13 @@ public class GunControllerMultiplayer : MonoBehaviour
         GameObject newBullet = Instantiate(bulletPrefab, gun.position, UnityEngine.Quaternion.identity); //spawn bullet
         newBullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * bulletSpeed; //determine bullet speed
 
+        // Set the owner of the bullet to the local player
+        Bullet bulletComponent = newBullet.GetComponent<Bullet>();
+        if (bulletComponent != null)
+        {
+            bulletComponent.Owner = view.Owner; // Change this line
+            Debug.Log("Bullet owner set to: " + PhotonNetwork.LocalPlayer.NickName);
+        }
         Destroy(newBullet, 7); //remove bullet from game after a certain amount of time
     }
 }

@@ -61,23 +61,28 @@ public class EnemyMultiplayer : MonoBehaviourPun
         }
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(int damageAmount, Photon.Realtime.Player attackingPlayer)
     {
         health -= damageAmount;
         healthBar.UpdateHealthBar(health, maxHealth);
 
         if (health <= 0)
+        {
+            Debug.Log("Damage taken. Attacking player: " + (attackingPlayer != null ? attackingPlayer.NickName : "null"));
+
+            OnEnemyKilled?.Invoke(this);
+
+            // Call the RPC to destroy the enemy on the master client
+            photonView.RPC("DestroyEnemyOnMasterClient", RpcTarget.MasterClient);
+        }
+    }
+
+    [PunRPC]
+    void DestroyEnemyOnMasterClient()
     {
-        // Transfer ownership to the local player
-        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-
-        // Now the local player can destroy the enemy
+        // Destroy the enemy
         PhotonNetwork.Destroy(gameObject);
-
-        OnEnemyKilled?.Invoke(this);
     }
-    }
-
     void moveCharacter(UnityEngine.Vector2 direction)
     {
         rb.MovePosition((UnityEngine.Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
